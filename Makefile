@@ -1,15 +1,23 @@
 cc = g++
 
+CFLAGS= -std=c++14
+
 all: codeTester
 
-codeBasic.o: codeBasic.cpp codeBasic.h encodeBasic.h decodeBasic.h
-	$(cc) -c codeBasic.cpp
+codeBasic.o: codeBasic.cpp codeBasic.h
+	$(cc) $(CFLAGS) -c codeBasic.cpp
 
-codeTester.o: codeTester.cpp codeBasic.h
-	$(cc) -c codeTester.cpp
+hammingCode.o: hammingCode.cpp codeBasic.h hammingCode.h
+	$(cc) $(CFLAGS) -c hammingCode.cpp
 
-codeTester: codeTester.o codeBasic.o
-	$(cc) codeTester.o codeBasic.o -larmadillo -o codeTester
+golayCode.o: golayCode.cpp codeBasic.h golayCode.h
+	$(cc) $(CFLAGS) -c golayCode.cpp
+
+codeTester.o: codeTester.cpp codeBasic.h golayCode.h hammingCode.h
+	$(cc) $(CFLAGS) -c codeTester.cpp
+
+codeTester: codeTester.o codeBasic.o golayCode.o hammingCode.o
+	$(cc) codeTester.o codeBasic.o golayCode.o hammingCode.o -larmadillo -o codeTester
 
 clean:
 	rm -f *.o codeTester
