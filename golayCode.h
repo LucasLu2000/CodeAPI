@@ -1,4 +1,5 @@
-#ifndef ENCODEBASIC_H
-#define ENCODEBASIC_H
+#ifndef GOLAYCODE_H
+#define GOLAYCODE_H
+#include "codeBasic.h"
 
 #endif

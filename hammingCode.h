@@ -1,4 +1,5 @@
-#ifndef DECODEBASIC_H
-#define DECODEBASIC_H
+#ifndef HAMMINGCODE_H
+#define HAMMINGCODE_H
+#include "codeBasic.h"
 
 #endif

@@ -1,7 +1,5 @@
-#ifndef CODER_H
-#define CODER_H
-#include "decodeBasic.h"
-#include "encodeBasic.h"
+#ifndef CODEBASIC_H
+#define CODEBASIC_H
 
 using namespace std;
 
