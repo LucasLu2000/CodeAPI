@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class NameMap {
+class Code {
 public:
 
 private:
