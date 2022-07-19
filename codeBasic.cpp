@@ -1,5 +1,20 @@
 #include "codeBasic.h"
 
+Code::Code() {
+    string input; // get a word from the user
+    int n,r;
+    cout << "Enter the length of the code: " << endl;
+    cin >> n;
+    cout << "Enter the r for a Hamming code of parameter [2^r-1,2^r-r-1,3]" << endl;
+    cin >> r;
+    cout << "Enter a word of length " << n-r << " over the binary field: ";
+    cin >> input;
+    Row<int> word(n-r,fill::zeros);
+    for (int i=0; i < input.length(); i++) {
+        word[i] = input[i] - '0'; // convert each char to an int
+    }
+}
+
 // this function creates a random matrix over a field given the number of rows and number of columns
 Mat<int> Code::randomMatrix (int r, int c, int q) {
     Mat<int> M(r,c,fill::zeros);

@@ -13,7 +13,8 @@ using namespace arma;
 
 class Code {
     public:
-        Code();
+        Code(); // should ask the user for the word and then the generator matrix
+        void printCode();
         Row<int> encode();
         Row<int> decode();
         Mat<int> randomMatrix (int r, int c, int q); // this function creates a random matrix over a field given the number of rows and number of columns

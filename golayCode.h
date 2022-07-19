@@ -2,7 +2,7 @@
 #define GOLAYCODE_H
 #include "codeBasic.h"
 
-class GolayCode {
+class GolayCode: public Code {
     public:
         GolayCode();
         Row<int> GolayEncode(Row<int> the_word);

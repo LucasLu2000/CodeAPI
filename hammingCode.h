@@ -2,7 +2,7 @@
 #define HAMMINGCODE_H
 #include "codeBasic.h"
 
-class HammingCode {
+class HammingCode: public Code {
     public:
         HammingCode();
         Row<int> HammingEncode(Row<int> the_word);
