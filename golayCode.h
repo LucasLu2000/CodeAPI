@@ -4,6 +4,7 @@
 
 class GolayCode {
     public:
+        GolayCode();
         Row<int> GolayEncode(Row<int> the_word);
         Row<int> GolayDecode(Row<int> the_receivedWord); // this function finds the original word
 
