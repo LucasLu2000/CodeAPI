@@ -30,6 +30,7 @@ class Code {
         Row<int> word;
         Mat<int> genMatrix;
         Row<int> codeWord;
+        Row<int> receivedWord;
 
 };
 
