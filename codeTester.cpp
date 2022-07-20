@@ -4,5 +4,6 @@
 
 int main() {
     Code();
+    cput << Code.n;
     return 0;
 }

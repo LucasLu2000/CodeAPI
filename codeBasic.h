@@ -11,9 +11,11 @@
 using namespace std;
 using namespace arma;
 
+// this is the parent class
 class Code {
     public:
         Code(); // should ask the user for the word and then the generator matrix
+        Code(Row<int> the_word, Mat<int> the_genMatrix);
         void printCode();
         Row<int> encode();
         Row<int> decode();
@@ -26,8 +28,11 @@ class Code {
         Mat<int> rrefMatrix (Mat<int> M, int q);
         Mat<int> noZeroRowMatrix (Mat<int> M);
 
-
     private:
+        int n;
+        int k;
+        int d;
+        int f; // the number of GF, so it must be a prime or a power of prime
         Row<int> word;
         Mat<int> genMatrix;
         Row<int> codeWord;

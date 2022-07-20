@@ -64,4 +64,5 @@ Row<int> HammingCode::HammingEncode(Row<int> the_word) {
     } // now the GDsorted matrix starts with a identity matrix
 
     Mat<int> G = HD.t();
+    reture G;
 }
