@@ -1,18 +1,41 @@
 #include "codeBasic.h"
 
-Code::Code() {
-    string input; // get a word from the user
-    int n,r;
-    cout << "Enter the length of the code: " << endl;
-    cin >> n;
-    cout << "Enter the r for a Hamming code of parameter [2^r-1,2^r-r-1,3]" << endl;
-    cin >> r;
-    cout << "Enter a word of length " << n-r << " over the binary field: ";
-    cin >> input;
-    Row<int> word(n-r,fill::zeros);
-    for (int i=0; i < input.length(); i++) {
-        word[i] = input[i] - '0'; // convert each char to an int
-    }
+Code::Code() : n(1), k(1), d(1), q(2) {
+    // string input; // get a word from the user
+    // cout << "Enter the length of the code: " << endl;
+    // cin >> n;
+    // cout << "Enter the r for a Hamming code of parameter [2^r-1,2^r-r-1,3]" << endl;
+    // cin >> r;
+    // cout << "Enter a word of length " << n-r << " over the binary field: ";
+    // cin >> input;
+    // Row<int> word(n-r,fill::zeros);
+    // for (int i=0; i < input.length(); i++) {
+    //     word[i] = input[i] - '0'; // convert each char to an int
+    // }
+}
+
+Code::Code(int the_n, int the_k, int the_d, int the_q) : n(the_n), k(the_k), d(the_d), q(the_q) {
+
+}
+
+int Code::getN() {
+    return n;
+}
+
+int Code::getK() {
+    return k;
+}
+
+int Code::getD() {
+    return d;
+}
+
+int Code::getQ() {
+    return q;
+}
+
+void Code::printCode() {
+    cout << "The parameters of the code are: " << n << ", " << k << ", " << d;
 }
 
 // this function creates a random matrix over a field given the number of rows and number of columns

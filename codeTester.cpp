@@ -3,7 +3,7 @@
 #include "golayCode.h"
 
 int main() {
-    Code();
-    cput << Code.n;
+    Code UnknownCode;
+    UnknownCode.printCode();
     return 0;
 }

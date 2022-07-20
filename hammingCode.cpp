@@ -1,5 +1,13 @@
 #include "hammingCode.h"
 
+HammingCode::HammingCode() : Code(), r(1) {
+
+}
+
+HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q, int the_r) : Code(the_n, the_k, the_d, the_q), r(the_r) {
+
+}
+
 // this function gives the parity-check matrix. Need to figure out how to create this when q is not 2.
 Mat<int> HammingCode::parityCheck (int n, int r, int q) {
     Mat<int> H(n,r,fill::zeros);
@@ -64,5 +72,5 @@ Row<int> HammingCode::HammingEncode(Row<int> the_word) {
     } // now the GDsorted matrix starts with a identity matrix
 
     Mat<int> G = HD.t();
-    reture G;
+    return the_word*G;
 }

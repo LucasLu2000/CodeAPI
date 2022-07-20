@@ -15,8 +15,12 @@ using namespace arma;
 class Code {
     public:
         Code(); // should ask the user for the word and then the generator matrix
-        Code(Row<int> the_word, Mat<int> the_genMatrix);
-        void printCode();
+        Code(int the_n, int the_k, int the_d, int the_q);
+        int getN();
+        int getK();
+        int getD();
+        int getQ();
+        void printCode(); // should print n, k, d, the type of the code and then the
         Row<int> encode();
         Row<int> decode();
         Mat<int> randomMatrix (int r, int c, int q); // this function creates a random matrix over a field given the number of rows and number of columns
@@ -32,7 +36,7 @@ class Code {
         int n;
         int k;
         int d;
-        int f; // the number of GF, so it must be a prime or a power of prime
+        int q; // the number of GF, so it must be a prime or a power of prime
         Row<int> word;
         Mat<int> genMatrix;
         Row<int> codeWord;
