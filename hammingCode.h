@@ -13,6 +13,7 @@ class HammingCode: public Code {
         Mat<int> getGenMatrix();
         Row<int> word;
         Mat<int> genMatrix;
+        Mat<int> parityCheckMatrix;
         Row<int> codeWord;
         Row<int> receivedWord;
 
