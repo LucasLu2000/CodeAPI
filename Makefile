@@ -13,7 +13,7 @@ hammingCode.o: hammingCode.cpp codeBasic.h hammingCode.h
 golayCode.o: golayCode.cpp codeBasic.h golayCode.h
 	$(cc) $(CFLAGS) -c golayCode.cpp
 
-codeTester.o: codeTester.cpp codeBasic.h
+codeTester.o: codeTester.cpp codeTester.h codeBasic.h
 	$(cc) $(CFLAGS) -c codeTester.cpp
 
 HammingCodeTester: codeTester.o codeBasic.o hammingCode.o
