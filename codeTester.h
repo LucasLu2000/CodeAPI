@@ -1,10 +1,22 @@
 #ifndef CODETESTER_H
 #define CODETESTER_H
 #include <bitset>
+#include <math.h>
 #include "codeBasic.h"
 #include "noise.h"
 #include "hammingCode.h"
 #include "golayCode.h"
+
+string TextToBinaryString(string text) {
+    string binaryStr = "";
+    for (int c=0; c<text.length(); c++) {
+        for (int i = 7; i >= 0; i--) {
+            binaryStr += to_string((text[c] >> i) & 1);
+            // binaryStr += to_string((text[c] / (int)pow(2,i)) % 2); //or this, need #include <math.h>
+        }
+    }
+    return binaryStr;
+}
 
 string BinaryStringToText(string binaryString) {
     string text = "";
@@ -25,7 +37,7 @@ string readFileIntoString(const string& path) {
              << path << "'" << endl;
         exit(EXIT_FAILURE);
     }
-    return string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+    return string((istreambuf_iterator<char>(input_file)), istreambuf_iterator<char>());
 }
 
 #endif
