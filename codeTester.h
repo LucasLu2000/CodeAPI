@@ -2,6 +2,7 @@
 #define CODETESTER_H
 #include <bitset>
 #include "codeBasic.h"
+#include "noise.h"
 #include "hammingCode.h"
 #include "golayCode.h"
 
