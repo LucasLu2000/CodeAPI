@@ -5,8 +5,15 @@ int main() {
     // ifstream f;
     // f.open(inFile, ios::binary);
     string testText = "Hello!";
-    cout << TextToBinaryString(testText);
-    cout << readFileIntoString(inFile);
-    // f.close();
+    textToBinaryRow(testText).print();
+    string str = binaryRowToText(textToBinaryRow(testText));
+    cout << testText.length();
+    cout << endl;
+    cout << str.length();
+    cout << endl;
+    if (testText == binaryRowToText(textToBinaryRow(testText))) {
+        cout << "They are the same!";
+    }
+    cout << endl;
     return 0;
 }
