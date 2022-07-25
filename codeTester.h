@@ -8,7 +8,7 @@
 #include "hammingCode.h"
 #include "golayCode.h"
 
-Row<int> textToBinaryRow(string text) {
+Row<int> textToBinaryRow(const string &text) {
     Row<int> binaryRow;
     vector<int> binaryVector;
     for (int c=0; c<text.length(); c++) {
@@ -21,7 +21,7 @@ Row<int> textToBinaryRow(string text) {
     return binaryRow;
 }
 
-char strToChar(string str) { // only one byte or 8 bits can be seen as one charactor
+char strToChar(const string &str) { // only one byte or 8 bits can be seen as one charactor
     char parsed = 0;
     for (int i = 0; i < 8; i++) {
         if (str[i] == '1') {
@@ -31,7 +31,7 @@ char strToChar(string str) { // only one byte or 8 bits can be seen as one chara
     return parsed;
 }
 
-string binaryRowToText(Row<int> binaryRow) {
+string binaryRowToText(const Row<int> &binaryRow) {
     string text = "";
     string binaryText = "";
     for (int i=0; i<binaryRow.n_cols; i++) {
@@ -43,6 +43,7 @@ string binaryRowToText(Row<int> binaryRow) {
     return text;
 }
 
+// This function does not work
 // string binaryRowToText(Row<int> binaryRow) {
 //     string text = "";
 //     string binaryText = "";
@@ -59,14 +60,18 @@ string binaryRowToText(Row<int> binaryRow) {
 //     return text;
 // }
 
+// this function read a file name (string type) and then return a the file content as a string
 string readFileIntoString(const string& path) {
-    ifstream input_file(path);
-    if (!input_file.is_open()) {
-        cerr << "Could not open the file - '"
-             << path << "'" << endl;
-        exit(EXIT_FAILURE);
+    ifstream f;
+    string textString="";
+    string line;
+    f.open(path);
+    while (!f.eof()) {
+        getline(f, line);
+        textString += line;
     }
-    return string((istreambuf_iterator<char>(input_file)), istreambuf_iterator<char>());
+    f.close();
+    return textString;
 }
 
 #endif

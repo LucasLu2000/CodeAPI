@@ -15,5 +15,7 @@ int main() {
         cout << "They are the same!";
     }
     cout << endl;
+    cout << readFileIntoString(inFile) << endl;
+    textToBinaryRow(readFileIntoString(inFile)).print();
     return 0;
 }
