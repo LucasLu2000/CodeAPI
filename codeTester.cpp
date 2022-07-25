@@ -1,21 +1,15 @@
 #include "codeTester.h"
 
 int main() {
-    string inFile = "in.txt";
-    // ifstream f;
-    // f.open(inFile, ios::binary);
-    string testText = "Hello!";
-    textToBinaryRow(testText).print();
-    string str = binaryRowToText(textToBinaryRow(testText));
-    cout << testText.length();
-    cout << endl;
-    cout << str.length();
-    cout << endl;
-    if (testText == binaryRowToText(textToBinaryRow(testText))) {
-        cout << "They are the same!";
-    }
-    cout << endl;
-    cout << readFileIntoString(inFile) << endl;
-    textToBinaryRow(readFileIntoString(inFile)).print();
+    string inputFile = "input.txt";
+    string outputFile = "output.txt";
+    Row<int> row1 = stringToBinaryRow(readFileIntoString(inputFile));
+    writeStringtoFile(binaryRowToString(row1),outputFile);
+    Row<int> row2 = stringToBinaryRow(readFileIntoString(outputFile));
+    row1.print("This is row1:");
+    row2.print("This is row2:");
+    // if (testText == binaryRowToText(textToBinaryRow(testText))) {
+    //     cout << "They are the same!";
+    // }
     return 0;
 }

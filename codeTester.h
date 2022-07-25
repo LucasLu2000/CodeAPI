@@ -7,7 +7,7 @@
 #include "hammingCode.h"
 #include "golayCode.h"
 
-Row<int> textToBinaryRow(const string &text) {
+Row<int> stringToBinaryRow(const string &text) {
     Row<int> binaryRow;
     vector<int> binaryVector;
     for (int c=0; c<text.length(); c++) {
@@ -30,7 +30,7 @@ char strToChar(const string &str) { // only one byte or 8 bits can be seen as on
     return parsed;
 }
 
-string binaryRowToText(const Row<int> &binaryRow) {
+string binaryRowToString(const Row<int> &binaryRow) {
     string text = "";
     string binaryText = "";
     for (int i=0; i<binaryRow.n_cols; i++) {
@@ -74,7 +74,7 @@ string readFileIntoString(const string &path) {
 }
 
 // this function takes a string and put it to a file
-void readFileIntoString(const string &output, const string &outputFile) {
+void writeStringtoFile(const string &output, const string &outputFile) {
     ofstream f;
     f.open(outputFile, ios::out);
     f.write(output.data(), output.size());
