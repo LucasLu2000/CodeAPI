@@ -1,6 +1,5 @@
 #ifndef CODETESTER_H
 #define CODETESTER_H
-#include <bitset>
 #include <math.h>
 #include <string.h>
 #include "codeBasic.h"
@@ -60,18 +59,26 @@ string binaryRowToText(const Row<int> &binaryRow) {
 //     return text;
 // }
 
-// this function read a file name (string type) and then return a the file content as a string
-string readFileIntoString(const string& path) {
+// this function reads a file name (string type) and then return a the file content as a string
+string readFileIntoString(const string &path) {
     ifstream f;
     string textString="";
     string line;
-    f.open(path);
+    f.open(path, ios::in);
     while (!f.eof()) {
         getline(f, line);
         textString += line;
     }
     f.close();
     return textString;
+}
+
+// this function takes a string and put it to a file
+void readFileIntoString(const string &output, const string &outputFile) {
+    ofstream f;
+    f.open(outputFile, ios::out);
+    f.write(output.data(), output.size());
+    f.close();
 }
 
 #endif
