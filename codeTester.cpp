@@ -12,6 +12,10 @@ int main() {
     #ifdef Hamming
         HammingCode HC(7,4,3,2,2);
         cout << HC.getK() << endl;
+        cout << "md5 of 'grape': " << md5("grape") << endl;
+        if (md5(readFileIntoString(inputFile)) == md5(readFileIntoString(outputFile)+"/n")) {
+            cout << "They are the same!" << endl;
+        }
     #endif
 
     #ifdef Golay
