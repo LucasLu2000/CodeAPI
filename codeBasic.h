@@ -31,6 +31,8 @@ class Code {
         Mat<int> modMatrix (Mat<int> M, int q);
         Mat<int> rrefMatrix (Mat<int> M, int q);
         Mat<int> noZeroRowMatrix (Mat<int> M);
+        vector<int> getPivotCols (Mat<int M>);
+        Mat<int> rightInvMatrix (Mat<int> M);
 
     private:
         int n;

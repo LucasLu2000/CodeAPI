@@ -166,7 +166,7 @@ Mat<int> Code::rrefMatrix (Mat<int> M, int q) {
     return rrefM;
 }
 
-//
+// this function eliminates all zero rows in a matrix
 Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
     Mat<int> MnoZero;
     vector<int> rowList;
@@ -187,4 +187,36 @@ Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
         MnoZero = join_vert(MnoZero,M.row(rowList[i]));
     }
     return MnoZero;
+}
+
+vector<int> Code::getPivotCols (Mat<int M>) {
+     vector<int> newPermuList; // record the the index of all pivot column
+     for (int i=0; i < M.n_cols; i++) { // cols
+         for (int j=0; j < M.n_rows; j++) { // rows
+             if (M(j,i) == 1) {
+                 int count = 0;
+                 for (int k=0; k < M.n_rows; k++) {
+                     if (M(k,i) == 0) {
+                         count++;
+                     }
+                 }
+                 if (count == (r-1)) {
+                     newPermuList.push_back(i); // then we know that this column i is a pivot column
+                     break;
+                 }
+             }
+         }
+     }
+     return newPermuList;
+}
+
+Mat<int> Code::rightInvMatrix (Mat<int> M) {
+    vector<int> pivotColList = getPivotCols(M);
+    Mat<int> rightInvG;
+    rightInvG = join_horiz(rightInvG,eye<Mat<int>>(k,k));
+    rightInvG = rrefMatrix(rightInvG,q);
+    rightInvG = rightInvG.submat(0,k,k-1,2*k-1);
+    Mat<int> zeroM(n-k,k,fill::zeros);
+    rightInvG = join_vert(rightInvG,zeroM);
+    return rightInvG;
 }
