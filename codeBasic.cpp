@@ -189,7 +189,7 @@ Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
     return MnoZero;
 }
 
-vector<int> Code::getPivotCols (Mat<int M>) {
+vector<int> Code::getPivotCols (Mat<int> M) {
      vector<int> newPermuList; // record the the index of all pivot column
      for (int i=0; i < M.n_cols; i++) { // cols
          for (int j=0; j < M.n_rows; j++) { // rows
@@ -200,7 +200,7 @@ vector<int> Code::getPivotCols (Mat<int M>) {
                          count++;
                      }
                  }
-                 if (count == (r-1)) {
+                 if (count == (M.n_rows-1)) {
                      newPermuList.push_back(i); // then we know that this column i is a pivot column
                      break;
                  }

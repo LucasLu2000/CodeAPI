@@ -4,6 +4,7 @@
 #include <string.h>
 #include "codeBasic.h"
 #include "noise.h"
+#include "md5.h"
 #include "hammingCode.h"
 #include "golayCode.h"
 
