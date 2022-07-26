@@ -8,8 +8,15 @@ int main() {
     Row<int> row2 = stringToBinaryRow(readFileIntoString(outputFile));
     row1.print("This is row1:");
     row2.print("This is row2:");
-    // if (testText == binaryRowToText(textToBinaryRow(testText))) {
-    //     cout << "They are the same!";
-    // }
+
+    #ifdef Hamming
+        HammingCode HC(7,4,3,2,2);
+        cout << HC.getK() << endl;
+    #endif
+
+    #ifdef Golay
+        cout << "Hello!" << endl;
+    #endif
+
     return 0;
 }

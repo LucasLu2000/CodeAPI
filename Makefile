@@ -19,14 +19,16 @@ hammingCode.o: hammingCode.cpp codeBasic.h hammingCode.h
 golayCode.o: golayCode.cpp codeBasic.h golayCode.h
 	$(cc) $(CFLAGS) -c golayCode.cpp
 
-codeTester.o: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h
-	$(cc) $(CFLAGS) -c codeTester.cpp
+# codeTester.o: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h
+# 	$(cc) $(CFLAGS) -c codeTester.cpp
 
-HammingCodeTester: codeTester.o codeBasic.o noise.o md5.o hammingCode.o
-	$(cc) codeTester.o codeBasic.o noise.o md5.o hammingCode.o -larmadillo -o HammingCodeTester
+HammingCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBasic.o noise.o md5.o hammingCode.o
+	$(cc) $(CFLAGS) -c codeTester.cpp -D Hamming -o codeTesterH.o
+	$(cc) codeTesterH.o codeBasic.o noise.o md5.o hammingCode.o -larmadillo -o HammingCodeTester
 
-GolayCodeTester: codeTester.o codeBasic.o noise.o md5.o golayCode.o
-	$(cc) codeTester.o codeBasic.o noise.o md5.o golayCode.o -larmadillo -o GolayCodeTester
+GolayCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBasic.o noise.o md5.o golayCode.o
+	$(cc) $(CFLAGS) -c codeTester.cpp -D Golay -o codeTesterG.o
+	$(cc) codeTesterG.o codeBasic.o noise.o md5.o golayCode.o -larmadillo -o GolayCodeTester
 
 clean:
 	rm -f *.o HammingCodeTester GolayCodeTester
