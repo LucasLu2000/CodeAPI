@@ -189,7 +189,8 @@ Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
     return MnoZero;
 }
 
-vector<int> Code::getPivotCols (Mat<int> M) {
+// this function finds all pivot columns and then return them as a vector
+vector<int> Code::getPivotCols (const Mat<int> &M) {
      vector<int> newPermuList; // record the the index of all pivot column
      for (int i=0; i < M.n_cols; i++) { // cols
          for (int j=0; j < M.n_rows; j++) { // rows
@@ -210,7 +211,15 @@ vector<int> Code::getPivotCols (Mat<int> M) {
      return newPermuList;
 }
 
-Mat<int> Code::rightInvMatrix (Mat<int> M) {
+Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColList) {
+    Mat<int> newM = M.col(pivotColList[0]);
+    for (int i=1; i<pivotColList.size(); i++) {
+        newM = join_horiz(newM,M.col(pivotColList[i]));
+    }
+    return newM;
+}
+
+Mat<int> Code::rightInvMatrix (const Mat<int> &M) {
     vector<int> pivotColList = getPivotCols(M);
     Mat<int> rightInvG;
     rightInvG = join_horiz(rightInvG,eye<Mat<int>>(k,k));

@@ -16,6 +16,10 @@ int main() {
         if (md5(readFileIntoString(inputFile)) == md5(readFileIntoString(outputFile)+"/n")) {
             cout << "They are the same!" << endl;
         }
+        Mat<int> mx = {{1,0,0},{0,1,0},{0,0,1}};
+        Mat<int> mxC = mx.col(1);
+        mx.print("mx:");
+        mxC.print("The second column of mx:");
     #endif
 
     #ifdef Golay
