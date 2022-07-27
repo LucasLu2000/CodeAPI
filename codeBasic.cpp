@@ -211,6 +211,7 @@ vector<int> Code::getPivotCols (const Mat<int> &M) {
      return newPermuList;
 }
 
+// This function returns a sub matrix given a matrix and a list of column indexes
 Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColList) {
     Mat<int> newM = M.col(pivotColList[0]);
     for (int i=1; i<pivotColList.size(); i++) {
@@ -219,12 +220,13 @@ Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColLi
     return newM;
 }
 
+// This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
 Mat<int> Code::rightInvMatrix (const Mat<int> &M) {
     vector<int> pivotColList = getPivotCols(M);
-    Mat<int> rightInvG;
+    Mat<int> rightInvG = getMatrixByCols(M,pivotColList);
     rightInvG = join_horiz(rightInvG,eye<Mat<int>>(k,k));
     rightInvG = rrefMatrix(rightInvG,q);
-    rightInvG = rightInvG.submat(0,k,k-1,2*k-1);
+    rightInvG = rightInvG.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
     Mat<int> zeroM(n-k,k,fill::zeros);
     rightInvG = join_vert(rightInvG,zeroM);
     return rightInvG;
