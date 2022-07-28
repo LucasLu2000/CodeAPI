@@ -1,34 +1,45 @@
 #include "codeTester.h"
 
 int main() {
-    string inputFile = "input.txt";
-    string outputFile = "output.txt";
-    Row<int> row1 = stringToBinaryRow(readFileIntoString(inputFile));
-    writeStringtoFile(binaryRowToString(row1),outputFile);
-    Row<int> row2 = stringToBinaryRow(readFileIntoString(outputFile));
-    row1.print("This is row1:");
-    row2.print("This is row2:");
 
     #ifdef Hamming
         HammingCode HC(7,4,3,2,3);
-        cout << HC.getN() << endl;
-        cout << HC.getK() << endl;
-        cout << "md5 of 'grape': " << md5("grape") << endl;
-        if (md5(readFileIntoString(inputFile)) == md5(readFileIntoString(outputFile)+"/n")) {
-            cout << "They are the same!" << endl;
+        cout << "This is Hamming code test platform." << endl;
+        string inputFile;
+        cout << "The input file: ";
+        cin >> inputFile;
+        string outputFile;
+        cout << "The output file: ";
+        cin >> outputFile;
+        HC.setWord(stringToBinaryRow(readFileIntoString(inputFile)));
+        HC.getWord().print("The word:");
+        Row<int> newWord = addZeroTail(HC.getWord(),HC.getK());
+        Row<int> decodedNewWord;
+        for (int i=0; i<newWord.n_cols; i+=HC.getK()) {
+            Row<int> encodedRow = HC.HammingEncode(newWord.cols(i,i+HC.getK()-1));
+            encodedRow.print("The encoded word:");
+            Row<int> decodedRow = HC.HammingDecode(encodedRow);
+            if (i==0) {
+                decodedNewWord = decodedRow;
+            }
+            else {
+                decodedNewWord = join_horiz(decodedNewWord,decodedRow);
+            }
+            decodedRow.print("The decoded word:");
         }
-        Mat<int> mx = {{1,0,0},{0,1,0},{0,0,1}};
-        Mat<int> mxC = mx.col(1);
-        mx.print("mx:");
-        mxC.print("The second column of mx:");
-        mx.insert_cols(1,mxC);
-        mx.print("The new mx:");
-        HC.HammingEncode({1,0,0,0}).print("encoded:");
-        HC.HammingDecode({1,1,1,0,0,0,1}).print("decoded:");
+        decodedNewWord.col(5) = 1;
+        decodedNewWord.col(6) = 1;
+        decodedNewWord.col(7) = 1;
+        decodedNewWord.col(8) = 1;
+        decodedNewWord.col(9) = 1;
+        writeStringtoFile(binaryRowToString(deleteZeroTail(decodedNewWord)),outputFile);
+        if (compareTwoFiles(inputFile,outputFile)) {
+            cout << "Yes! They are the same." << endl;
+        }
     #endif
 
     #ifdef Golay
-        cout << "Hello!" << endl;
+        cout << "Golay code module is under construction." << endl;
     #endif
 
     return 0;

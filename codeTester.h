@@ -77,9 +77,30 @@ string readFileIntoString(const string &path) {
 // this function takes a string and put it to a file
 void writeStringtoFile(const string &output, const string &outputFile) {
     ofstream f;
-    f.open(outputFile, ios::out);
+    f.open(outputFile, ios::app);
     f.write(output.data(), output.size());
     f.close();
+}
+
+bool compareTwoFiles(const string &the_inputFile, const string &the_outputFile) {
+    return md5(readFileIntoString(the_inputFile)) == md5(readFileIntoString(the_outputFile));
+}
+
+Row<int> addZeroTail(Row<int> the_word, int the_k) {
+    int numOfZeros = the_k - the_word.n_cols % the_k;
+    if (numOfZeros != the_k) {
+        Row<int> zeroTail(numOfZeros, fill::zeros);
+        the_word = join_horiz(the_word,zeroTail);
+    }
+    return the_word;
+}
+
+Row<int> deleteZeroTail(Row<int> the_word) {
+    int numOfZeros = the_word.n_cols % 8;
+    if (numOfZeros != 0) {
+        the_word.shed_cols(the_word.n_cols-numOfZeros,the_word.n_cols-1);
+    }
+    return the_word;
 }
 
 #endif

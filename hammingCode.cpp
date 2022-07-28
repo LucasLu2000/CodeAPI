@@ -71,6 +71,7 @@ void HammingCode::setHammingGenMatrix() {
     } // now the GDsorted matrix starts with a identity matrix
 
     setGenMatrix(HD.t());
+    getGenMatrix().print("The GenMatrix:");
 }
 
 // this function uses Hamming encoding scheme to encode a given word
