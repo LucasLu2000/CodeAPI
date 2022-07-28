@@ -1,6 +1,6 @@
 cc = g++
 
-CFLAGS= -std=c++14
+CFLAGS = -std=c++14
 
 all: HammingCodeTester GolayCodeTester
 

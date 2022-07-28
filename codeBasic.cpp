@@ -221,13 +221,23 @@ Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColLi
 }
 
 // This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
-Mat<int> Code::rightInvMatrix (const Mat<int> &M) {
-    vector<int> pivotColList = getPivotCols(M);
-    Mat<int> rightInvG = getMatrixByCols(M,pivotColList);
-    rightInvG = join_horiz(rightInvG,eye<Mat<int>>(k,k));
-    rightInvG = rrefMatrix(rightInvG,q);
-    rightInvG = rightInvG.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
-    Mat<int> zeroM(n-k,k,fill::zeros);
-    rightInvG = join_vert(rightInvG,zeroM);
-    return rightInvG;
-}
+// Mat<int> Code::rightInvMatrix (const Mat<int> &M) {
+//     vector<int> pivotColList = getPivotCols(M);
+//     Mat<int> invM = getMatrixByCols(M,pivotColList);
+//     invM = join_horiz(invM,eye<Mat<int>>(k,k));
+//     invM = rrefMatrix(invM,q);
+//     invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
+//     Mat<int> zeroRow(1,M.n_cols,fill::zeros);
+//     Mat<int> rightInvM = zeroRow;
+//     for (int i=0; i<M.n_cols; i++) {
+//         if (find(pivotColList.begin(), pivotColList.end(), pivotColList) != pivotColList.end()) {
+//             rightInvM.insert_rows(i,zeroRow);
+//         }
+//         else {
+//             rightInvM.insert_rows(i,invM.row(0));
+//             invM.shed_row(0);
+//         }
+//     }
+//     rightInvM.shed_row(M.n_cols-1);
+//     return rightInvM;
+// }

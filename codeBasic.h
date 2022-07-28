@@ -14,6 +14,10 @@ using namespace arma;
 // this is the parent class
 class Code {
     public:
+        int n;
+        int k;
+        int d;
+        int q; // the number of GF, so it must be a prime or a power of prime
         Code(); // should ask the user for the word and then the generator matrix
         Code(int the_n, int the_k, int the_d, int the_q);
         int getN();
@@ -36,10 +40,6 @@ class Code {
         Mat<int> rightInvMatrix (const Mat<int> &M);
 
     private:
-        int n;
-        int k;
-        int d;
-        int q; // the number of GF, so it must be a prime or a power of prime
         Row<int> word;
         Mat<int> genMatrix;
         Row<int> codeWord;

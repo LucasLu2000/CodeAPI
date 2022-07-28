@@ -10,7 +10,8 @@ int main() {
     row2.print("This is row2:");
 
     #ifdef Hamming
-        HammingCode HC(7,4,3,2,2);
+        HammingCode HC(7,4,3,2,3);
+        cout << HC.getN() << endl;
         cout << HC.getK() << endl;
         cout << "md5 of 'grape': " << md5("grape") << endl;
         if (md5(readFileIntoString(inputFile)) == md5(readFileIntoString(outputFile)+"/n")) {
@@ -20,6 +21,10 @@ int main() {
         Mat<int> mxC = mx.col(1);
         mx.print("mx:");
         mxC.print("The second column of mx:");
+        mx.insert_cols(1,mxC);
+        mx.print("The new mx:");
+        HC.parityCheck();
+        HC.HammingEncode({1,0,0,0});
     #endif
 
     #ifdef Golay
