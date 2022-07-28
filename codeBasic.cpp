@@ -1,17 +1,7 @@
 #include "codeBasic.h"
 
 Code::Code() : n(1), k(1), d(1), q(2) {
-    // string input; // get a word from the user
-    // cout << "Enter the length of the code: " << endl;
-    // cin >> n;
-    // cout << "Enter the r for a Hamming code of parameter [2^r-1,2^r-r-1,3]" << endl;
-    // cin >> r;
-    // cout << "Enter a word of length " << n-r << " over the binary field: ";
-    // cin >> input;
-    // Row<int> word(n-r,fill::zeros);
-    // for (int i=0; i < input.length(); i++) {
-    //     word[i] = input[i] - '0'; // convert each char to an int
-    // }
+
 }
 
 Code::Code(int the_n, int the_k, int the_d, int the_q) : n(the_n), k(the_k), d(the_d), q(the_q) {
@@ -34,12 +24,28 @@ int Code::getQ() {
     return q;
 }
 
+void Code::setWord(Row<int> the_word) {
+    word = the_word;
+}
+
+void Code::setReceivedWord(Row<int> the_receivedWord) {
+    receivedWord= the_receivedWord;
+}
+
+Row<int> Code::getWord() {
+    return word;
+}
+
+Row<int> Code::getReceivedWord() {
+    return receivedWord;
+}
+
 void Code::printCode() {
     cout << "The parameters of the code are: " << n << ", " << k << ", " << d;
 }
 
 // this function creates a random matrix over a field given the number of rows and number of columns
-Mat<int> Code::randomMatrix (int r, int c, int q) {
+Mat<int> Code::randomMatrix(int r, int c, int q) {
     Mat<int> M(r,c,fill::zeros);
     for (int i=0; i<r; i++) {
         for (int j=0; j<c; j++) {
@@ -51,7 +57,7 @@ Mat<int> Code::randomMatrix (int r, int c, int q) {
 
 // this function compares two row vectors having the same length.
 // It returns 1 if larger, 0 if equal, and -1 if smaller.
-int Code::compareRowVec (Row<int> a, Row<int> b) {
+int Code::compareRowVec(Row<int> a, Row<int> b) {
     int compareInt = 0;
     for (int i=0; i<a.n_cols; i++) {
         if (a(i) > b(i)) {
@@ -67,7 +73,7 @@ int Code::compareRowVec (Row<int> a, Row<int> b) {
 }
 
 // this function turns all entries of a matrix in a field to be non-negative
-Mat<int> Code::nonNegativeMatrix (Mat<int> M, int q) {
+Mat<int> Code::nonNegativeMatrix(Mat<int> M, int q) {
     Mat<int> Mdivide = M;
     for (int i=0; i < M.n_rows; i++) {
         for (int j=0; j < M.n_cols; j++) {
@@ -80,7 +86,7 @@ Mat<int> Code::nonNegativeMatrix (Mat<int> M, int q) {
 }
 
 // this function divids a matrix (a row class object also works) by an element in the field
-Mat<int> Code::dividesMatrix (Mat<int> M, int x, int q) {
+Mat<int> Code::dividesMatrix(Mat<int> M, int x, int q) {
     Mat<int> Mdivide = M;
     for (int i=0; i < M.n_rows; i++) {
         for (int j=0; j < M.n_cols; j++) {
@@ -96,7 +102,7 @@ Mat<int> Code::dividesMatrix (Mat<int> M, int x, int q) {
 }
 
 // this function changes n from base 10 to base q and then returns a vector of a given length
-vector<int> Code::baseq_rep (int n, int q, int length) {
+vector<int> Code::baseq_rep(int n, int q, int length) {
     vector<int> number = {};
     for (int i = 0; i < length; i++) {
         int remainder = n % q;
@@ -107,7 +113,7 @@ vector<int> Code::baseq_rep (int n, int q, int length) {
 }
 
 // this function changes a matrix from base 10 to base 2
-Mat<int> Code::modMatrix (Mat<int> M, int q) {
+Mat<int> Code::modMatrix(Mat<int> M, int q) {
     Mat<int> Mmodq = M;
     for (int i=0; i < Mmodq.n_rows; i++) {
         for (int j=0; j < Mmodq.n_cols; j++) {
@@ -118,7 +124,8 @@ Mat<int> Code::modMatrix (Mat<int> M, int q) {
     return Mmodq;
 }
 
-Mat<int> Code::rrefMatrix (Mat<int> M, int q) {
+// this functions returns rref of the matrix
+Mat<int> Code::rrefMatrix(Mat<int> M, int q) {
     Mat<int> rrefM = M;
     // the next step is to find the rref of GD, for now only work in binary field
     for (int i=0; i < rrefM.n_rows; i++) {
@@ -133,15 +140,10 @@ Mat<int> Code::rrefMatrix (Mat<int> M, int q) {
             }
         }
         if (nonZeroIndex < rrefM.n_cols) {
-            // cout << endl;
-            // cout << "nonZero: " << GD(i,nonZeroIndex) << endl;
             rrefM.row(i) = dividesMatrix(rrefM.row(i),rrefM(i,nonZeroIndex),q);
-            // cout << "i: " << i << endl;
             for (int k=0; k < rrefM.n_rows; k++) {
                 if (k != i) {
-                    // GD.row(k).print("k: ");
                     rrefM.row(k) = nonNegativeMatrix((rrefM.row(k) - (rrefM.row(i) * rrefM(k,nonZeroIndex))),q);
-                    // GD.row(k).print("k: ");
                 }
             }
         }
@@ -167,7 +169,7 @@ Mat<int> Code::rrefMatrix (Mat<int> M, int q) {
 }
 
 // this function eliminates all zero rows in a matrix
-Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
+Mat<int> Code::noZeroRowMatrix(Mat<int> M) {
     Mat<int> MnoZero;
     vector<int> rowList;
     for (int i=0; i < M.n_rows; i++) {
@@ -190,7 +192,7 @@ Mat<int> Code::noZeroRowMatrix (Mat<int> M) {
 }
 
 // this function finds all pivot columns and then return them as a vector
-vector<int> Code::getPivotCols (const Mat<int> &M) {
+vector<int> Code::getPivotCols(const Mat<int> &M) {
      vector<int> newPermuList; // record the the index of all pivot column
      for (int i=0; i < M.n_cols; i++) { // cols
          for (int j=0; j < M.n_rows; j++) { // rows
@@ -212,7 +214,7 @@ vector<int> Code::getPivotCols (const Mat<int> &M) {
 }
 
 // This function returns a sub matrix given a matrix and a list of column indexes
-Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColList) {
+Mat<int> Code::getMatrixByCols(const Mat<int> &M, const vector<int> &pivotColList) {
     Mat<int> newM = M.col(pivotColList[0]);
     for (int i=1; i<pivotColList.size(); i++) {
         newM = join_horiz(newM,M.col(pivotColList[i]));
@@ -220,24 +222,24 @@ Mat<int> Code::getMatrixByCols (const Mat<int> &M, const vector<int> &pivotColLi
     return newM;
 }
 
-// This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
-// Mat<int> Code::rightInvMatrix (const Mat<int> &M) {
-//     vector<int> pivotColList = getPivotCols(M);
-//     Mat<int> invM = getMatrixByCols(M,pivotColList);
-//     invM = join_horiz(invM,eye<Mat<int>>(k,k));
-//     invM = rrefMatrix(invM,q);
-//     invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
-//     Mat<int> zeroRow(1,M.n_cols,fill::zeros);
-//     Mat<int> rightInvM = zeroRow;
-//     for (int i=0; i<M.n_cols; i++) {
-//         if (find(pivotColList.begin(), pivotColList.end(), pivotColList) != pivotColList.end()) {
-//             rightInvM.insert_rows(i,zeroRow);
-//         }
-//         else {
-//             rightInvM.insert_rows(i,invM.row(0));
-//             invM.shed_row(0);
-//         }
-//     }
-//     rightInvM.shed_row(M.n_cols-1);
-//     return rightInvM;
-// }
+//This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
+Mat<int> Code::rightInvMatrix(const Mat<int> &M) {
+    vector<int> pivotColList = getPivotCols(M);
+    Mat<int> invM = getMatrixByCols(M,pivotColList);
+    invM = join_horiz(invM,eye<Mat<int>>(k,k));
+    invM = rrefMatrix(invM,q);
+    invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
+    Mat<int> zeroRow(1,M.n_cols,fill::zeros);
+    Mat<int> rightInvM = zeroRow;
+    for (int i=0; i<M.n_cols; i++) {
+        if (find(pivotColList.begin(), pivotColList.end(), i) != pivotColList.end()) {
+            rightInvM.insert_rows(i,zeroRow);
+        }
+        else {
+            rightInvM.insert_rows(i,invM.row(0));
+            invM.shed_row(0);
+        }
+    }
+    rightInvM.shed_row(M.n_cols-1);
+    return rightInvM;
+}

@@ -9,10 +9,7 @@ HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q, int the_r) 
 }
 
 // this function gives the parity-check matrix. Need to figure out how to create this when q is not 2.
-void HammingCode::parityCheck () {
-    cout << "n: " << n << endl;
-    cout << "q: " << q << endl;
-    cout << "r: " << r << endl;
+Mat<int> HammingCode::parityCheck() {
     Mat<int> H(n,r,fill::zeros);
     for (int i=1; i < n+1; i++) {
         vector<int> row = baseq_rep(i,q,r);
@@ -20,19 +17,15 @@ void HammingCode::parityCheck () {
             H(i-1,j) = row[j];
         }
     }
-    parityCheckMatrix = H;
-    parityCheckMatrix.print("parityCheck:");
+    return H;
 }
 
-void HammingCode::HammingEncode(Row<int> the_word) {
+Mat<int> HammingCode::HammingEncode(Row<int> the_word) {
     // form the parity-check matrix by base changing
-    Mat<int> H = parityCheckMatrix;
-    H.print("H:");
-    Mat<int> GD;
-    GD = H.t();
-    GD.print("1:");
+    setWord(the_word);
+    Mat<int> H = parityCheck();
+    Mat<int> GD = H.t();
     GD = modMatrix(GD,q);
-    GD.print("2:");
     GD = rrefMatrix(GD,q);
     GD.print("the parity-check matrix of the dual C:");
     GD = noZeroRowMatrix(GD);
@@ -65,7 +58,6 @@ void HammingCode::HammingEncode(Row<int> the_word) {
     } // now the permuList contains the right permutation
 
     Mat<int> GDsorted = GD;
-    cout << "Hello!" << endl;
     for (int i=0; i < GDsorted.n_cols; i++) {
         GDsorted.col(i) = GD.col(permuList[i]);
     } // now the GDsorted matrix starts with a identity matrix
@@ -79,5 +71,6 @@ void HammingCode::HammingEncode(Row<int> the_word) {
     } // now the GDsorted matrix starts with a identity matrix
 
     Mat<int> G = HD.t();
-    // return G;
+
+    return getWord()*G;
 }
