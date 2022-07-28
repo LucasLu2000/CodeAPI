@@ -28,6 +28,10 @@ class Code {
         void setReceivedWord(Row<int> the_receivedWord);
         Row<int> getWord();
         Row<int> getReceivedWord();
+        void setParityCheck(Mat<int> the_parityCheckMatrix);
+        Mat<int> getParityCheck();
+        void setGenMatrix(Mat<int> the_genMatrix);
+        Mat<int> getGenMatrix();
         void printCode(); // should print n, k, d, the type of the code
         Row<int> encode();
         Row<int> decode();
@@ -42,9 +46,11 @@ class Code {
         vector<int> getPivotCols(const Mat<int> &M);
         Mat<int> getMatrixByCols(const Mat<int> &M, const vector<int> &pivotColList);
         Mat<int> rightInvMatrix(const Mat<int> &M);
+        int countElement(Mat<int> M, int element);
 
     private:
         Row<int> word;
+        Mat<int> parityCheckMatrix;
         Mat<int> genMatrix;
         Row<int> codeWord;
         Row<int> receivedWord;

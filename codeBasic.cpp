@@ -40,6 +40,22 @@ Row<int> Code::getReceivedWord() {
     return receivedWord;
 }
 
+void Code::setParityCheck(Mat<int> the_parityCheckMatrix) {
+    parityCheckMatrix = the_parityCheckMatrix;
+}
+
+Mat<int> Code::getParityCheck() {
+    return parityCheckMatrix;
+}
+
+void Code::setGenMatrix(Mat<int> the_genMatrix) {
+    genMatrix = the_genMatrix;
+}
+
+Mat<int> Code::getGenMatrix() {
+    return genMatrix;
+}
+
 void Code::printCode() {
     cout << "The parameters of the code are: " << n << ", " << k << ", " << d;
 }
@@ -224,22 +240,34 @@ Mat<int> Code::getMatrixByCols(const Mat<int> &M, const vector<int> &pivotColLis
 
 //This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
 Mat<int> Code::rightInvMatrix(const Mat<int> &M) {
-    vector<int> pivotColList = getPivotCols(M);
+    Mat<int> rrefM = rrefMatrix(M,q);
+    vector<int> pivotColList = getPivotCols(rrefM);
     Mat<int> invM = getMatrixByCols(M,pivotColList);
-    invM = join_horiz(invM,eye<Mat<int>>(k,k));
+    invM = join_horiz(invM,eye<Mat<int>>(M.n_rows,M.n_rows));
     invM = rrefMatrix(invM,q);
+    invM.print("invM after rref:");
     invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
-    Mat<int> zeroRow(1,M.n_cols,fill::zeros);
-    Mat<int> rightInvM = zeroRow;
+    Mat<int> rightInvM(M.n_cols,M.n_rows,fill::zeros);
+    invM.print("invM:");
+    int countIndex = 0; // count the row index of the square matrix
     for (int i=0; i<M.n_cols; i++) {
         if (find(pivotColList.begin(), pivotColList.end(), i) != pivotColList.end()) {
-            rightInvM.insert_rows(i,zeroRow);
-        }
-        else {
-            rightInvM.insert_rows(i,invM.row(0));
-            invM.shed_row(0);
+            rightInvM.row(i) = invM.row(countIndex);
+            countIndex++;
         }
     }
-    rightInvM.shed_row(M.n_cols-1);
+    (M*rightInvM).print();
     return rightInvM;
+}
+
+int Code::countElement(Mat<int> M, int element) {
+    int n = 0;
+    for (int i=0; i<M.n_rows; i++) {
+        for (int j=0; j<M.n_cols; j++) {
+            if (M(i,j)==element) {
+                n++;
+            };
+        }
+    }
+    return n;
 }

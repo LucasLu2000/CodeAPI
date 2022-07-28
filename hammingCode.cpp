@@ -9,7 +9,8 @@ HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q, int the_r) 
 }
 
 // this function gives the parity-check matrix. Need to figure out how to create this when q is not 2.
-Mat<int> HammingCode::parityCheck() {
+void HammingCode::setHammingParityCheck() {
+    // form the parity-check matrix by base changing
     Mat<int> H(n,r,fill::zeros);
     for (int i=1; i < n+1; i++) {
         vector<int> row = baseq_rep(i,q,r);
@@ -17,13 +18,12 @@ Mat<int> HammingCode::parityCheck() {
             H(i-1,j) = row[j];
         }
     }
-    return H;
+    setParityCheck(H);
 }
 
-Mat<int> HammingCode::HammingEncode(Row<int> the_word) {
-    // form the parity-check matrix by base changing
-    setWord(the_word);
-    Mat<int> H = parityCheck();
+void HammingCode::setHammingGenMatrix() {
+    setHammingParityCheck();
+    Mat<int> H = getParityCheck();
     Mat<int> GD = H.t();
     GD = modMatrix(GD,q);
     GD = rrefMatrix(GD,q);
@@ -70,7 +70,39 @@ Mat<int> HammingCode::HammingEncode(Row<int> the_word) {
         HD.row(i) = HDsorted.row(permuList[i]);
     } // now the GDsorted matrix starts with a identity matrix
 
-    Mat<int> G = HD.t();
+    setGenMatrix(HD.t());
+}
 
-    return getWord()*G;
+// this function uses Hamming encoding scheme to encode a given word
+Row<int> HammingCode::HammingEncode(Row<int> the_word) {
+    setWord(the_word);
+    setHammingGenMatrix();
+    return getWord()*getGenMatrix();
+}
+
+// this function uses Hamming decoding scheme to decode a given word
+Row<int> HammingCode::HammingDecode(Row<int> the_receivedword) {
+    Row<int> errorPatternRow0(n,fill::zeros);
+    Mat<int> errorPattern = errorPatternRow0;
+    errorPattern = join_vert(errorPattern,eye<Mat<int>>(n,n));
+    Mat<int> H = getParityCheck();
+    Row<int> syndromeRow0(r,fill::zeros);
+    Mat<int> syndrome = join_vert(syndromeRow0,H);
+    Mat<int> SDA = join_horiz(errorPattern,syndrome);
+    Row<int> wH = modMatrix(the_receivedword*H,q);
+    Row<int> correctedWord;
+    for (int i=0; i<syndrome.n_rows; i++) {
+        if (countElement(conv_to<Row<int>>::from(syndrome.row(i)==wH),1) == r) { // if two rows are the same, all entries are 1.
+            correctedWord = modMatrix(the_receivedword+errorPattern.row(i),q);
+            correctedWord.print("The corrected word:");
+            break;
+        }
+    }
+    // next step is to find the generator matrix. We have it in the encoding part
+    Mat<int> rightInvG = rightInvMatrix(getGenMatrix());
+    getGenMatrix().print("The genMatrix:");
+    rightInvG.print("The rightInvG:");
+    Mat<int> originalWord = modMatrix(correctedWord*rightInvG,q);
+
+    return originalWord;
 }

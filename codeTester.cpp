@@ -23,8 +23,8 @@ int main() {
         mxC.print("The second column of mx:");
         mx.insert_cols(1,mxC);
         mx.print("The new mx:");
-        HC.parityCheck().print("parityCheck:");
         HC.HammingEncode({1,0,0,0}).print("encoded:");
+        HC.HammingDecode({1,1,1,0,0,0,1}).print("decoded:");
     #endif
 
     #ifdef Golay
