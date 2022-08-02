@@ -8,20 +8,36 @@ Code::Code(int the_n, int the_k, int the_d, int the_q) : n(the_n), k(the_k), d(t
 
 }
 
-int Code::getN() {
+int Code::getN() const {
     return n;
 }
 
-int Code::getK() {
+int Code::getK() const {
     return k;
 }
 
-int Code::getD() {
+int Code::getD() const {
     return d;
 }
 
-int Code::getQ() {
+int Code::getQ() const {
     return q;
+}
+
+void Code::setN(int the_n) {
+    n = the_n;
+}
+
+void Code::setK(int the_k) {
+    k = the_k;
+}
+
+void Code::setD(int the_d) {
+    d = the_d;
+}
+
+void Code::setQ(int the_q) {
+    q = the_q;
 }
 
 void Code::setWord(Row<int> the_word) {

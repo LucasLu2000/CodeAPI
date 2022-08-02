@@ -1,14 +1,19 @@
 #ifndef NOISE_H
 #define NOISE_H
+#include "codeBasic.h"
+#include <iomanip>
 
+// binary symmetric channel
 class Noise {
     public:
         Noise();
-        Noise();
-        getRate();
+        Noise(double the_bitChangeRate);
+        double getRate() const;
+        void setRate(double the_bitChangeRate);
+        void noiseGenerator(); //Row<int>encodedWord
 
     private:
-        float bitChangeRate;
+        double bitChangeRate;
 
 };
 

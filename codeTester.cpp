@@ -34,6 +34,11 @@ int main() {
 
     #ifdef Golay
         cout << "Golay code module is under construction." << endl;
+        Noise N1(0.5);
+        for (int i=0; i<5; i++) {
+            N1.noiseGenerator();
+        }
+
     #endif
 
     return 0;
