@@ -10,7 +10,7 @@ class Noise {
         Noise(double the_bitChangeRate);
         double getRate() const;
         void setRate(double the_bitChangeRate);
-        void noiseGenerator(); //Row<int>encodedWord
+        void noiseGenerator(int the_seed); //Row<int>encodedWord
 
     private:
         double bitChangeRate;
