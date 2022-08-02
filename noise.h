@@ -4,8 +4,11 @@
 class Noise {
     public:
         Noise();
+        Noise();
+        getRate();
 
     private:
+        float bitChangeRate;
 
 };
 

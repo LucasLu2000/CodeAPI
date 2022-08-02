@@ -14,25 +14,19 @@ int main() {
         HC.setWord(stringToBinaryRow(readFileIntoString(inputFile)));
         HC.getWord().print("The word:");
         Row<int> newWord = addZeroTail(HC.getWord(),HC.getK());
-        Row<int> decodedNewWord;
+        Row<int> encodedNewWord;
         for (int i=0; i<newWord.n_cols; i+=HC.getK()) {
             Row<int> encodedRow = HC.HammingEncode(newWord.cols(i,i+HC.getK()-1));
             encodedRow.print("The encoded word:");
-            Row<int> decodedRow = HC.HammingDecode(encodedRow);
             if (i==0) {
-                decodedNewWord = decodedRow;
+                encodedNewWord = encodedRow;
             }
             else {
-                decodedNewWord = join_horiz(decodedNewWord,decodedRow);
+                encodedNewWord = join_horiz(encodedNewWord,encodedRow);
             }
-            decodedRow.print("The decoded word:");
+            encodedRow.print("The decoded word:");
         }
-        decodedNewWord.col(5) = 1;
-        decodedNewWord.col(6) = 1;
-        decodedNewWord.col(7) = 1;
-        decodedNewWord.col(8) = 1;
-        decodedNewWord.col(9) = 1;
-        writeStringtoFile(binaryRowToString(deleteZeroTail(decodedNewWord)),outputFile);
+        writeStringtoFile(binaryRowToString(deleteZeroTail(encodedNewWord)),outputFile);
         if (compareTwoFiles(inputFile,outputFile)) {
             cout << "Yes! They are the same." << endl;
         }
