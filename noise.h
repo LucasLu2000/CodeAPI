@@ -7,14 +7,16 @@
 class Noise {
     public:
         Noise();
-        Noise(double the_bitChangeRate);
+        Noise(double the_bitUnchangeRate, int the_seed = time(NULL));
         double getRate() const;
-        void setRate(double the_bitChangeRate);
-        void noiseGenerator(int the_seed); //Row<int>encodedWord
+        void setRate(double the_bitUnchangeRate);
+        int getSeed();
+        void setSeed(int the_seed);
+        Row<int> noiseGenerator(Row<int> encodedWord);
 
     private:
-        double bitChangeRate;
-
+        double bitUnchangeRate;
+        int sd;
 };
 
 #endif
