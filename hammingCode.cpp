@@ -75,14 +75,14 @@ void HammingCode::setHammingGenMatrix() {
 }
 
 // this function uses Hamming encoding scheme to encode a given word
-Row<int> HammingCode::HammingEncode(Row<int> the_word) {
+Row<int> HammingCode::HammingEncode(const Row<int> the_word) {
     setWord(the_word);
     setHammingGenMatrix();
     return getWord()*getGenMatrix();
 }
 
 // this function uses Hamming decoding scheme to decode a given word
-Row<int> HammingCode::HammingDecode(Row<int> the_receivedword) {
+Row<int> HammingCode::HammingDecode(const Row<int> the_receivedword) {
     Row<int> errorPatternRow0(n,fill::zeros);
     Mat<int> errorPattern = errorPatternRow0;
     errorPattern = join_vert(errorPattern,eye<Mat<int>>(n,n));

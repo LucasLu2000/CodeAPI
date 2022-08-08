@@ -8,8 +8,8 @@ class HammingCode: public Code {
         HammingCode(int the_n, int the_k, int the_d, int the_q, int the_r);
         void setHammingParityCheck();
         void setHammingGenMatrix();
-        Row<int> HammingEncode(Row<int> the_word);
-        Row<int> HammingDecode(Row<int> the_receivedWord); // this function finds the original word
+        Row<int> HammingEncode(const Row<int> the_word);
+        Row<int> HammingDecode(const Row<int> the_receivedWord); // this function finds the original word
 
     private:
         int r;

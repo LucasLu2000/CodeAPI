@@ -31,4 +31,4 @@ GolayCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBasic
 	$(cc) codeTesterG.o codeBasic.o noise.o md5.o golayCode.o -larmadillo -o GolayCodeTester
 
 clean:
-	rm -f *.o HammingCodeTester GolayCodeTester
+	rm -f *.o HammingCodeTester GolayCodeTester output.txt

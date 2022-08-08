@@ -25,7 +25,10 @@ int main() {
                 encodedNewWord = join_horiz(encodedNewWord,encodedRow);
             }
         }
-        Noise N1(1);
+        double stableRate;
+        cout << "Please enter p, the probability that the digit received is the same as the digit sent: ";
+        cin >> stableRate;
+        Noise N1(stableRate);
         Row<int> receivedWord = N1.noiseGenerator(encodedNewWord);
         Row<int> decodedNewWord;
         for (int i=0; i<receivedWord.n_cols; i+=HC.getN()) {
