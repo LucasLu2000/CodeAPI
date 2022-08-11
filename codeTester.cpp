@@ -2,9 +2,10 @@
 
 int main() {
 
+    cout << "HelloHello" << endl;
     #ifdef Hamming
-        HammingCode HC(7,4,3,2,3);
         cout << "This is Hamming code test platform." << endl;
+        HammingCode HC(7,5,3,2);
         string inputFile;
         cout << "The input file: ";
         cin >> inputFile;

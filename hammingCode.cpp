@@ -1,11 +1,36 @@
 #include "hammingCode.h"
 
-HammingCode::HammingCode() : Code(), r(1) {
-
+HammingCode::HammingCode() : Code() {
+    checkHamming();
 }
 
-HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q, int the_r) : Code(the_n, the_k, the_d, the_q), r(the_r) {
+HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q) : Code(the_n, the_k, the_d, the_q) {
+    checkHamming();
+}
 
+void HammingCode::checkHamming() {
+    setR(getN()-getK());
+    while (((pow(getQ(),getR())-1)/(getQ()-1) != getN()) || (d != 3)) { // we want to check if it is really a Hamming code
+        cout << (pow(getQ(),getR())-1)/(getQ()-1) << endl;
+        cout << "The parameters of the code given are not able to construct a Hamming code. Please enter n, k, d, and q again." << endl;
+        cout << "n: ";
+        cin >> n;
+        cout << "k: ";
+        cin >> k;
+        cout << "d: ";
+        cin >> d;
+        cout << "q: ";
+        cin >> q;
+        setR(getN()-getK());
+    }
+}
+
+int HammingCode::getR() const {
+    return r;
+}
+
+void HammingCode::setR(int the_r) {
+    r = the_r;
 }
 
 // this function gives the parity-check matrix. Need to figure out how to create this when q is not 2.
