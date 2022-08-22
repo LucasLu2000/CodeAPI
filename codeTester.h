@@ -60,16 +60,29 @@ string binaryRowToString(const Row<int> &binaryRow) {
 //     return text;
 // }
 
+// // this function reads a file name (string type) and then return a the file content as a string
+// string readFileIntoString(const string &path) {
+//     ifstream f;
+//     string textString="";
+//     string line;
+//     f.open(path, ios::in);
+//     while (!f.eof()) {
+//         getline(f, line);
+//         textString += line;
+//     }
+//     f.close();
+//     return textString;
+// }
+
 // this function reads a file name (string type) and then return a the file content as a string
 string readFileIntoString(const string &path) {
     ifstream f;
     string textString="";
-    string line;
+    char c;
     f.open(path, ios::in);
-    while (!f.eof()) {
-        getline(f, line);
-        textString += line;
-    }
+    while (f.get(c)) {
+        textString += c;
+    }        // loop getting single characters
     f.close();
     return textString;
 }

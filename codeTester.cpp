@@ -2,10 +2,11 @@
 
 int main() {
 
-    cout << "HelloHello" << endl;
+    cout << "This is an API for some error-correcting codes." << endl;
+
     #ifdef Hamming
         cout << "This is Hamming code test platform." << endl;
-        HammingCode HC(7,5,3,2);
+        HammingCode HC(7,4,3,2);
         string inputFile;
         cout << "The input file: ";
         cin >> inputFile;
@@ -27,13 +28,17 @@ int main() {
             }
         }
         double stableRate;
-        cout << "Please enter p, the probability that the digit received is the same as the digit sent: ";
-        cin >> stableRate;
-        Noise N1(stableRate);
-        Row<int> receivedWord = N1.noiseGenerator(encodedNewWord);
+        // cout << "Please enter p, the probability that each digit received is the same as the digit sent: ";
+        // cin >> stableRate;
+        // Noise N1(stableRate);
+        // Row<int> receivedWord = N1.noiseGenerator(encodedNewWord);
+        Row<int> receivedWord = encodedNewWord;
         Row<int> decodedNewWord;
         for (int i=0; i<receivedWord.n_cols; i+=HC.getN()) {
-            Row<int> decodedRow = HC.HammingDecode(receivedWord.cols(i,i+HC.getN()-1));
+            Row<int> receivedRow = receivedWord.cols(i,i+HC.getN()-1);
+            receivedRow(3) = 1;
+            // Row<int> decodedRow = HC.HammingDecode(receivedRow);
+            Row<int> decodedRow = receivedRow;
             decodedRow.print("The decoded word:");
             if (i==0) {
                 decodedNewWord = decodedRow;
