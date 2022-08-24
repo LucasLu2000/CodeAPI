@@ -52,7 +52,7 @@ void HammingCode::setHammingGenMatrix() {
     Mat<int> GD = H.t();
     GD = modMatrix(GD,q);
     GD = rrefMatrix(GD,q);
-    GD.print("the parity-check matrix of the dual C:");
+    // GD.print("the parity-check matrix of the dual C:");
     GD = noZeroRowMatrix(GD);
 
     vector<int> permuList;
@@ -96,7 +96,7 @@ void HammingCode::setHammingGenMatrix() {
     } // now the GDsorted matrix starts with a identity matrix
 
     setGenMatrix(HD.t());
-    getGenMatrix().print("The GenMatrix:");
+    // getGenMatrix().print("The GenMatrix:");
 }
 
 // this function uses Hamming encoding scheme to encode a given word
@@ -120,14 +120,14 @@ Row<int> HammingCode::HammingDecode(const Row<int> the_receivedword) {
     for (int i=0; i<syndrome.n_rows; i++) {
         if (countElement(conv_to<Row<int>>::from(syndrome.row(i)==wH),1) == r) { // if two rows are the same, all entries are 1.
             correctedWord = modMatrix(the_receivedword+errorPattern.row(i),q);
-            correctedWord.print("The corrected word:");
+            // correctedWord.print("The corrected word:");
             break;
         }
     }
     // next step is to find the generator matrix. We have it in the encoding part
     Mat<int> rightInvG = rightInvMatrix(getGenMatrix());
-    getGenMatrix().print("The genMatrix:");
-    rightInvG.print("The rightInvG:");
+    // getGenMatrix().print("The genMatrix:");
+    // rightInvG.print("The rightInvG:");
     Mat<int> originalWord = modMatrix(correctedWord*rightInvG,q);
 
     return originalWord;

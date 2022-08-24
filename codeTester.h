@@ -60,14 +60,14 @@ string binaryRowToString(const Row<int> &binaryRow) {
 //     return text;
 // }
 
-// // this function reads a file name (string type) and then return a the file content as a string
+// // this function reads a file name (string type) and then return a the file content as a string. This function ignores newline characters.
 // string readFileIntoString(const string &path) {
 //     ifstream f;
 //     string textString="";
 //     string line;
 //     f.open(path, ios::in);
 //     while (!f.eof()) {
-//         getline(f, line);
+//         getline(f, line); // this command gets a line but it does not record the newline at the end.
 //         textString += line;
 //     }
 //     f.close();

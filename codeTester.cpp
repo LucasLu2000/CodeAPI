@@ -14,12 +14,10 @@ int main() {
         cout << "The output file: ";
         cin >> outputFile;
         HC.setWord(stringToBinaryRow(readFileIntoString(inputFile)));
-        HC.getWord().print("The word:");
         Row<int> newWord = addZeroTail(HC.getWord(),HC.getK()); // so that the length of the row is divisible by k
         Row<int> encodedNewWord;
         for (int i=0; i<newWord.n_cols; i+=HC.getK()) {
             Row<int> encodedRow = HC.HammingEncode(newWord.cols(i,i+HC.getK()-1));
-            encodedRow.print("The encoded word:");
             if (i==0) {
                 encodedNewWord = encodedRow;
             }
@@ -28,18 +26,14 @@ int main() {
             }
         }
         double stableRate;
-        // cout << "Please enter p, the probability that each digit received is the same as the digit sent: ";
-        // cin >> stableRate;
-        // Noise N1(stableRate);
-        // Row<int> receivedWord = N1.noiseGenerator(encodedNewWord);
-        Row<int> receivedWord = encodedNewWord;
+        cout << "Please enter p, the probability that each digit received is the same as the digit sent: ";
+        cin >> stableRate;
+        Noise N1(stableRate);
+        Row<int> receivedWord = N1.noiseGenerator(encodedNewWord);
         Row<int> decodedNewWord;
         for (int i=0; i<receivedWord.n_cols; i+=HC.getN()) {
             Row<int> receivedRow = receivedWord.cols(i,i+HC.getN()-1);
-            receivedRow(3) = 1;
-            // Row<int> decodedRow = HC.HammingDecode(receivedRow);
-            Row<int> decodedRow = receivedRow;
-            decodedRow.print("The decoded word:");
+            Row<int> decodedRow = HC.HammingDecode(receivedRow);
             if (i==0) {
                 decodedNewWord = decodedRow;
             }

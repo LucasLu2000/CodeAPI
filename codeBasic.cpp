@@ -261,10 +261,10 @@ Mat<int> Code::rightInvMatrix(const Mat<int> &M) {
     Mat<int> invM = getMatrixByCols(M,pivotColList);
     invM = join_horiz(invM,eye<Mat<int>>(M.n_rows,M.n_rows));
     invM = rrefMatrix(invM,q);
-    invM.print("invM after rref:");
+    // invM.print("invM after rref:");
     invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
     Mat<int> rightInvM(M.n_cols,M.n_rows,fill::zeros);
-    invM.print("invM:");
+    // invM.print("invM:");
     int countIndex = 0; // count the row index of the square matrix
     for (int i=0; i<M.n_cols; i++) {
         if (find(pivotColList.begin(), pivotColList.end(), i) != pivotColList.end()) {
@@ -272,7 +272,7 @@ Mat<int> Code::rightInvMatrix(const Mat<int> &M) {
             countIndex++;
         }
     }
-    (M*rightInvM).print();
+    // (M*rightInvM).print();
     return rightInvM;
 }
 
