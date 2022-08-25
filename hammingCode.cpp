@@ -9,9 +9,9 @@ HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q) : Code(the_
 }
 
 void HammingCode::checkHamming() {
-    setR(getN()-getK());
-    while (((pow(getQ(),getR())-1)/(getQ()-1) != getN()) || (d != 3)) { // we want to check if it is really a Hamming code
-        cout << (pow(getQ(),getR())-1)/(getQ()-1) << endl;
+    r = getN()-getK();
+    while (((pow(q,r)-1)/(q-1) != n) || (d != 3)) { // we want to check if it is really a Hamming code
+        cout << (pow(q,r)-1)/(q-1) << endl;
         cout << "The parameters of the code given are not able to construct a Hamming code. Please enter n, k, d, and q again." << endl;
         cout << "n: ";
         cin >> n;
@@ -21,7 +21,7 @@ void HammingCode::checkHamming() {
         cin >> d;
         cout << "q: ";
         cin >> q;
-        setR(getN()-getK());
+        r = getN()-getK();
     }
 }
 
