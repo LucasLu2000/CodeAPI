@@ -19,6 +19,9 @@ hammingCode.o: hammingCode.cpp codeBasic.h hammingCode.h
 golayCode.o: golayCode.cpp codeBasic.h golayCode.h
 	$(cc) $(CFLAGS) -c golayCode.cpp
 
+cyclicCode.o: cyclicCode.cpp codeBasic.h cyclicCode.h
+	$(cc) $(CFLAGS) -c cyclicCode.cpp
+
 # codeTester.o: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h
 # 	$(cc) $(CFLAGS) -c codeTester.cpp
 
@@ -26,9 +29,14 @@ HammingCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBas
 	$(cc) $(CFLAGS) -c codeTester.cpp -D Hamming -o codeTesterH.o
 	$(cc) codeTesterH.o codeBasic.o noise.o md5.o hammingCode.o -larmadillo -o HammingCodeTester
 
+# this part need to be changed later when being under cyclic code class
 GolayCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBasic.o noise.o md5.o golayCode.o
 	$(cc) $(CFLAGS) -c codeTester.cpp -D Golay -o codeTesterG.o
 	$(cc) codeTesterG.o codeBasic.o noise.o md5.o golayCode.o -larmadillo -o GolayCodeTester
 
+CyclicCodeTester: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h codeBasic.o noise.o md5.o cyclicCode.o
+	$(cc) $(CFLAGS) -c codeTester.cpp -D Cyclic -o codeTesterC.o
+	$(cc) codeTesterC.o codeBasic.o noise.o md5.o cyclicCode.o -larmadillo -o CyclicCodeTester
+
 clean:
-	rm -f *.o HammingCodeTester GolayCodeTester output.txt
+	rm -f *.o HammingCodeTester CyclicCodeTester GolayCodeTester output.txt
