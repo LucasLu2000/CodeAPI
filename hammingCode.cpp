@@ -9,7 +9,7 @@ HammingCode::HammingCode(int the_n, int the_k, int the_d, int the_q) : Code(the_
 }
 
 void HammingCode::checkHamming() {
-    r = getN()-getK();
+    r = n-k;
     while (((pow(q,r)-1)/(q-1) != n) || (d != 3)) { // we want to check if it is really a Hamming code
         cout << (pow(q,r)-1)/(q-1) << endl;
         cout << "The parameters of the code given are not able to construct a Hamming code. Please enter n, k, d, and q again." << endl;
@@ -21,16 +21,8 @@ void HammingCode::checkHamming() {
         cin >> d;
         cout << "q: ";
         cin >> q;
-        r = getN()-getK();
+        r = n-k;
     }
-}
-
-int HammingCode::getR() const {
-    return r;
-}
-
-void HammingCode::setR(int the_r) {
-    r = the_r;
 }
 
 // this function gives the parity-check matrix. Need to figure out how to create this when q is not 2.

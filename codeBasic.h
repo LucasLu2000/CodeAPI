@@ -13,21 +13,14 @@ using namespace arma;
 
 // this is the parent class
 class Code {
+
     public:
-        int n;
-        int k;
-        int d;
-        int q; // the number of GF, so it must be a prime or a power of prime
         Code(); // should ask the user for the word and then the generator matrix
         Code(int the_n, int the_k, int the_d, int the_q);
         int getN() const;
         int getK() const;
         int getD() const;
         int getQ() const;
-        void setN(int the_n);
-        void setK(int the_k);
-        void setD(int the_d);
-        void setQ(int the_q);
         void setWord(Row<int> the_word);
         void setReceivedWord(Row<int> the_receivedWord);
         Row<int> getWord();
@@ -52,7 +45,17 @@ class Code {
         Mat<int> rightInvMatrix(const Mat<int> &M);
         int countElement(Mat<int> M, int element);
 
+    protected:
+        int n;
+        int k;
+        int d;
+        int q; // the number of GF, so it must be a prime or a power of prime
+
     private:
+        void setN(int the_n);
+        void setK(int the_k);
+        void setD(int the_d);
+        void setQ(int the_q);
         Row<int> word;
         Mat<int> parityCheckMatrix;
         Mat<int> genMatrix;
