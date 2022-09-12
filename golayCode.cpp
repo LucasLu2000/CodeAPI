@@ -1,10 +1,10 @@
 #include "golayCode.h"
 
-GolayCode::GolayCode() : Code() {
+GolayCode::GolayCode() : CyclicCode() {
     checkGolay();
 }
 
-GolayCode::GolayCode(int the_n, int the_k, int the_d, int the_q) : Code(the_n, the_k, the_d, the_q) {
+GolayCode::GolayCode(int the_n, int the_k, int the_d, int the_q) : CyclicCode(the_n, the_k, the_d, the_q) {
     checkGolay();
 }
 

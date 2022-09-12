@@ -1,8 +1,10 @@
 #ifndef GOLAYCODE_H
 #define GOLAYCODE_H
 #include "codeBasic.h"
+#include "cyclicCode.h"
 
-class GolayCode: public Code { // for now only works in binary
+class GolayCode: public CyclicCode { // for now only works in binary
+    
     public:
         GolayCode();
         GolayCode(int the_n, int the_k, int the_d, int the_q);
