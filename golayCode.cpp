@@ -2,10 +2,12 @@
 
 GolayCode::GolayCode() : CyclicCode() {
     checkGolay();
+    setGenerator(golayGenerator);
 }
 
 GolayCode::GolayCode(int the_n, int the_k, int the_d, int the_q) : CyclicCode(the_n, the_k, the_d, the_q) {
     checkGolay();
+    setGenerator(golayGenerator);
 }
 
 void GolayCode::checkGolay() {

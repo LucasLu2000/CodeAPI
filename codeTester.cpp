@@ -2,17 +2,17 @@
 
 int main() {
 
-    cout << "This is an API for some error-correcting codes." << endl;
+    // cout << "This is an API for some error-correcting codes." << endl;
+    // string inputFile;
+    // cout << "The input file: ";
+    // cin >> inputFile;
+    // string outputFile;
+    // cout << "The output file: ";
+    // cin >> outputFile;
 
     #ifdef Hamming
-        cout << "This is Hamming code test platform." << endl;
+        cout << "This is binary Hamming code test platform." << endl;
         HammingCode HC(7,4,3,2);
-        string inputFile;
-        cout << "The input file: ";
-        cin >> inputFile;
-        string outputFile;
-        cout << "The output file: ";
-        cin >> outputFile;
         HC.setWord(stringToBinaryRow(readFileIntoString(inputFile)));
         Row<int> newWord = addZeroTail(HC.getWord(),HC.getK()); // so that the length of the row is divisible by k
         Row<int> encodedNewWord;
@@ -48,7 +48,9 @@ int main() {
     #endif
 
     #ifdef Golay
-        cout << "Golay code module is under construction." << endl;
+        cout << "This is binary Golay code test platform." << endl;
+        GolayCode GC(23,12,7,2);
+        GC.CyclicEncode({1,1},GC.getGenerator()).print();
     #endif
 
     return 0;
