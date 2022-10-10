@@ -30,7 +30,7 @@ void HammingCode::setHammingParityCheck() {
     // form the parity-check matrix by base changing
     Mat<int> H(n,r,fill::zeros);
     for (int i=1; i < n+1; i++) {
-        vector<int> row = baseq_rep(i,q,r);
+        vector<int> row = baseq_rep(i,r);
         for (int j=0; j < 3; j++) {
             H(i-1,j) = row[j];
         }
@@ -42,8 +42,8 @@ void HammingCode::setHammingGenMatrix() {
     setHammingParityCheck();
     Mat<int> H = getParityCheck();
     Mat<int> GD = H.t();
-    GD = modMatrix(GD,q);
-    GD = rrefMatrix(GD,q);
+    GD = modMatrix(GD);
+    GD = rrefMatrix(GD);
     // GD.print("the parity-check matrix of the dual C:");
     GD = noZeroRowMatrix(GD);
 
@@ -107,11 +107,11 @@ Row<int> HammingCode::HammingDecode(const Row<int> the_receivedword) {
     Row<int> syndromeRow0(r,fill::zeros);
     Mat<int> syndrome = join_vert(syndromeRow0,H);
     Mat<int> SDA = join_horiz(errorPattern,syndrome);
-    Row<int> wH = modMatrix(the_receivedword*H,q);
+    Row<int> wH = modMatrix(the_receivedword*H);
     Row<int> correctedWord;
     for (int i=0; i<syndrome.n_rows; i++) {
         if (countElement(conv_to<Row<int>>::from(syndrome.row(i)==wH),1) == r) { // if two rows are the same, all entries are 1.
-            correctedWord = modMatrix(the_receivedword+errorPattern.row(i),q);
+            correctedWord = modMatrix(the_receivedword+errorPattern.row(i));
             // correctedWord.print("The corrected word:");
             break;
         }
@@ -120,7 +120,7 @@ Row<int> HammingCode::HammingDecode(const Row<int> the_receivedword) {
     Mat<int> rightInvG = rightInvMatrix(getGenMatrix());
     // getGenMatrix().print("The genMatrix:");
     // rightInvG.print("The rightInvG:");
-    Mat<int> originalWord = modMatrix(correctedWord*rightInvG,q);
+    Mat<int> originalWord = modMatrix(correctedWord*rightInvG);
 
     return originalWord;
 }

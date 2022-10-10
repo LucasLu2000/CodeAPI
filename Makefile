@@ -16,11 +16,11 @@ md5.o: md5.cpp md5.h
 hammingCode.o: hammingCode.cpp codeBasic.h hammingCode.h
 	$(cc) $(CFLAGS) -c hammingCode.cpp
 
-golayCode.o: golayCode.cpp codeBasic.h golayCode.h
-	$(cc) $(CFLAGS) -c golayCode.cpp
-
 cyclicCode.o: cyclicCode.cpp codeBasic.h cyclicCode.h
 	$(cc) $(CFLAGS) -c cyclicCode.cpp
+
+golayCode.o: golayCode.cpp codeBasic.h cyclicCode.h golayCode.h
+	$(cc) $(CFLAGS) -c golayCode.cpp
 
 # codeTester.o: codeTester.cpp codeTester.h codeBasic.h noise.h md5.h
 # 	$(cc) $(CFLAGS) -c codeTester.cpp

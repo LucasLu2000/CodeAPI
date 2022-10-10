@@ -77,10 +77,10 @@ void Code::printCode() {
 }
 
 // this function creates a random matrix over a field given the number of rows and number of columns
-Mat<int> Code::randomMatrix(int r, int c, int q) {
-    Mat<int> M(r,c,fill::zeros);
-    for (int i=0; i<r; i++) {
-        for (int j=0; j<c; j++) {
+Mat<int> Code::randomMatrix(int rn, int cn) {
+    Mat<int> M(rn,cn,fill::zeros);
+    for (int i=0; i<rn; i++) {
+        for (int j=0; j<cn; j++) {
             M(i,j) = rand() % q;
         }
     }
@@ -105,7 +105,7 @@ int Code::compareRowVec(Row<int> a, Row<int> b) {
 }
 
 // this function turns all entries of a matrix in a field to be non-negative
-Mat<int> Code::nonNegativeMatrix(Mat<int> M, int q) {
+Mat<int> Code::nonNegativeMatrix(Mat<int> M) {
     Mat<int> Mdivide = M;
     for (int i=0; i < M.n_rows; i++) {
         for (int j=0; j < M.n_cols; j++) {
@@ -118,7 +118,7 @@ Mat<int> Code::nonNegativeMatrix(Mat<int> M, int q) {
 }
 
 // this function divids a matrix (a row class object also works) by an element in the field
-Mat<int> Code::dividesMatrix(Mat<int> M, int x, int q) {
+Mat<int> Code::dividesMatrix(Mat<int> M, int x) {
     Mat<int> Mdivide = M;
     for (int i=0; i < M.n_rows; i++) {
         for (int j=0; j < M.n_cols; j++) {
@@ -134,18 +134,18 @@ Mat<int> Code::dividesMatrix(Mat<int> M, int x, int q) {
 }
 
 // this function changes n from base 10 to base q and then returns a vector of a given length
-vector<int> Code::baseq_rep(int n, int q, int length) {
+vector<int> Code::baseq_rep(int num, int length) {
     vector<int> number = {};
     for (int i = 0; i < length; i++) {
-        int remainder = n % q;
+        int remainder = num % q;
         number.push_back(remainder);
-        n = n / q;
+        num = num / q;
     }
     return number;
 }
 
 // this function changes a matrix from base 10 to base 2
-Mat<int> Code::modMatrix(Mat<int> M, int q) {
+Mat<int> Code::modMatrix(Mat<int> M) {
     Mat<int> Mmodq = M;
     for (int i=0; i < Mmodq.n_rows; i++) {
         for (int j=0; j < Mmodq.n_cols; j++) {
@@ -157,7 +157,7 @@ Mat<int> Code::modMatrix(Mat<int> M, int q) {
 }
 
 // this functions returns rref of the matrix
-Mat<int> Code::rrefMatrix(Mat<int> M, int q) {
+Mat<int> Code::rrefMatrix(Mat<int> M) {
     Mat<int> rrefM = M;
     // the next step is to find the rref of GD, for now only work in binary field
     for (int i=0; i < rrefM.n_rows; i++) {
@@ -172,16 +172,16 @@ Mat<int> Code::rrefMatrix(Mat<int> M, int q) {
             }
         }
         if (nonZeroIndex < rrefM.n_cols) {
-            rrefM.row(i) = dividesMatrix(rrefM.row(i),rrefM(i,nonZeroIndex),q);
+            rrefM.row(i) = dividesMatrix(rrefM.row(i),rrefM(i,nonZeroIndex));
             for (int k=0; k < rrefM.n_rows; k++) {
                 if (k != i) {
-                    rrefM.row(k) = nonNegativeMatrix((rrefM.row(k) - (rrefM.row(i) * rrefM(k,nonZeroIndex))),q);
+                    rrefM.row(k) = nonNegativeMatrix((rrefM.row(k) - (rrefM.row(i) * rrefM(k,nonZeroIndex))));
                 }
             }
         }
     }
 
-    rrefM = modMatrix(rrefM,q);
+    rrefM = modMatrix(rrefM);
 
     // permute the rows. Try to put numbers to the top left corner using bubble sort algorithm
     int count = 0;
@@ -256,11 +256,11 @@ Mat<int> Code::getMatrixByCols(const Mat<int> &M, const vector<int> &pivotColLis
 
 //This function finds the right inverse of a matrix, the matrix must have more columns than rows and have full rank
 Mat<int> Code::rightInvMatrix(const Mat<int> &M) {
-    Mat<int> rrefM = rrefMatrix(M,q);
+    Mat<int> rrefM = rrefMatrix(M);
     vector<int> pivotColList = getPivotCols(rrefM);
     Mat<int> invM = getMatrixByCols(M,pivotColList);
     invM = join_horiz(invM,eye<Mat<int>>(M.n_rows,M.n_rows));
-    invM = rrefMatrix(invM,q);
+    invM = rrefMatrix(invM);
     // invM.print("invM after rref:");
     invM = invM.submat(0,M.n_rows,M.n_rows-1,2*M.n_rows-1);
     Mat<int> rightInvM(M.n_cols,M.n_rows,fill::zeros);

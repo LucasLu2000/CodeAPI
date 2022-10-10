@@ -1,3 +1,4 @@
+#include "codeBasic.h"
 #include "golayCode.h"
 
 GolayCode::GolayCode() : CyclicCode() {
